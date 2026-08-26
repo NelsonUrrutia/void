@@ -6,6 +6,7 @@ class Connection:
         """Connect to void.db and configure results as name-accessible rows."""
         self.db_path = Path(__file__).parent / "void.db"
         self.tables_script = Path(__file__).parent /  "init_tables.sql"
+        self.test_data_script = Path(__file__).parent / "test_data.sql"
 
         self.connection = sqlite3.connect(self.db_path)
         self.connection.row_factory = sqlite3.Row
@@ -23,6 +24,13 @@ class Connection:
         """Run init_tables.sql to create the schema. Safe to call more than
         once, every statement uses IF NOT EXISTS."""
         with open(self.tables_script) as f:
+            sql = f.read()
+            self.cursor.executescript(sql)
+            self.connection.commit()
+
+    def load_test_data(self):
+        """Run test_data.sql to populate sample rows."""
+        with open(self.test_data_script) as f:
             sql = f.read()
             self.cursor.executescript(sql)
             self.connection.commit()

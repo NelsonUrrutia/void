@@ -20,6 +20,10 @@ INSERT INTO activities (name, category_id) VALUES
     -- same activity name as Work's, but under a different category: allowed
     ('Meeting',   (SELECT id FROM categories WHERE name = 'Hobbies'));
 
+-- one hidden activity, to exercise is_active filtering
+INSERT INTO activities (name, category_id, is_active) VALUES
+    ('Old Hobby', (SELECT id FROM categories WHERE name = 'Hobbies'), 0);
+
 INSERT INTO void_note (note_date) VALUES
     ('2026-08-23'),
     ('2026-08-24');
