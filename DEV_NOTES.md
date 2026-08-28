@@ -14,6 +14,9 @@ Debugging
 How to run unittest 
 `python -m unittest void.tests.models.test_activity -v`
 
+How to run specific functions
+`python -c "from void.controllers.activity import ActivityController; ActivityController().get_activities()`
+
 How to use breakpoint()
 - p <expr> — print any variable/expression (e.g. p result, p result[0]["name"])
 - n — run the next line
