@@ -21,3 +21,20 @@ class Category:
             """
             result = db.querying(sql)
             return result
+
+    def get_active_categories(self):
+        with Connection() as db:
+            sql = """
+                SELECT
+                    categories.name as "category"
+                FROM categories
+                WHERE categories.is_active = 1
+            """
+            result = db.querying(sql)
+            return result
+
+    def create_category(self, category):
+        with Connection() as db:
+            data = (category,)
+            sql = "INSERT INTO categories (name) VALUES(?)"
+            db.execute(sql, data)
