@@ -1,5 +1,6 @@
 from void.database.connection import Connection
 
+
 class Activity:
 
     def __enter__(self):
@@ -13,7 +14,6 @@ class Activity:
         with Connection() as db:
             sql = """
                 SELECT
-                    activities.id as "id",
                     activities.name as "activity",
                     categories.name as "category"
                 FROM activities
@@ -24,3 +24,9 @@ class Activity:
                     categories.is_active == 1;"""
             result = db.querying(sql)
             return result
+
+    def create_activity(self, activity, category_id):
+        with Connection() as db:
+            data = (activity, category_id)
+            sql = "INSERT INTO activities (name, category_id) VALUES(?, ?)"
+            db.execute(sql, data)

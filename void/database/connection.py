@@ -1,6 +1,7 @@
 import sqlite3
 from pathlib import Path
 
+
 class Connection:
     def __init__(self):
         """Connect to void.db and configure results as name-accessible rows."""
@@ -52,4 +53,3 @@ class Connection:
     def close(self):
         """Close the database connection."""
         self.connection.close()
-

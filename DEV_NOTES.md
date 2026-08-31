@@ -8,7 +8,7 @@ Run the project
 - `python void/main.py`
 
 Debugging
-1. Terminal 1 `textual console`
+1. Terminal 1 `textual console -x SYSTEM -x EVENT -x DEBUG -x WORKER`
 2. Terminal 2 `textual run --dev  void/main.py`
 
 How to run unittest 

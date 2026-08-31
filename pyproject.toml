@@ -9,7 +9,7 @@ description = ""
 readme = "README.md"
 license = { file = "LICENSE" }
 requires-python = ">=3.10"
-dependencies = ["textual"]
+dependencies = ["textual", "textual-dev"]
 authors = [{ name = "Nelson Urrutia", email = "nelurrutia15@gmail.com" }]
 
 [project.urls]
@@ -18,11 +18,11 @@ Repository = "https://github.com/NelsonUrrutia/void"
 [project.scripts]
 void = "void.main:run"
 
-[project.optional-dependencies]
-dev = ["textual-dev"]
-
 [tool.hatch.build.targets.sdist]
 include = ["/void", "/LICENSE", "/README.md", "/pyproject.toml"]
 
 [tool.hatch.build.targets.wheel]
 packages = ["void"]
+
+[tool.basedpyright]
+typeCheckingMode = "basic"

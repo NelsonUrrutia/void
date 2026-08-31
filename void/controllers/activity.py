@@ -1,5 +1,5 @@
-
 from void.models.activity import Activity
+
 
 class ActivityController:
 
@@ -8,5 +8,9 @@ class ActivityController:
             raw_activities = ac.get_active_activities()
             activities = []
             for item in raw_activities:
-                activities.append((item['id'], item['activity'], item['category']))
+                activities.append((item['activity'], item['category']))
             return activities
+
+    def create_activity(self, activity, category_id):
+        with Activity() as ac:
+            ac.create_activity(activity, category_id)
