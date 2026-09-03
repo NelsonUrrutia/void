@@ -8,13 +8,6 @@ from void.views.note import NoteView
 
 class VoidApp(App):
 
-    BINDINGS = [
-        ("ctrl+1", "show_tab('void_note')", "Note"),
-        ("ctrl+2", "show_tab('void_collection')", "Collection"),
-        ("ctrl+3", "show_tab('void_activities')", "Activities"),
-        ("ctrl+q", "quit", "Quit the app")
-    ]
-
     def compose(self) -> ComposeResult:
         yield Header(icon="🧠")
 

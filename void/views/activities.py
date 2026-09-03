@@ -2,7 +2,7 @@ from typing import override
 
 from textual import on
 from textual.app import ComposeResult
-from textual.containers import Horizontal, Vertical
+from textual.containers import Horizontal, HorizontalScroll, Vertical, VerticalScroll
 from textual.widgets import Button, DataTable, Input, Label, Select, Static
 
 from void.controllers.activity import ActivityController
@@ -11,32 +11,62 @@ from void.controllers.category import CategoryController
 
 class ActivitiesView(Static):
     DEFAULT_CSS = """
+        .module_title{
+           text-style: bold;
+        }
+
+        #category_module{
+            height: auto;
+            padding: 1 1;
+            width: 35%
+        }
+
+        #activity_module{
+            padding: 1 1;
+            height: 100%;
+            width: 60%;
+        }
+
+        #activity_form{
+            height: auto;
+        }
+
+        #activity_form Horizontal{
+            height: auto;
+        }
+
+        #activities_table{
+            height: 1fr;
+        }
+
         #activity_id{
             display: none;
         }
+
     """
 
     @override
     def compose(self) -> ComposeResult:
         with Horizontal():
-            with Vertical():
-                yield Label("CATEGORIES")
+            with Vertical(id="category_module"):
+                yield Label("CATEGORIES", classes="module_title")
                 yield Label("New Category")
                 yield Input(placeholder="Add a new category", id="new_category")
                 yield Button(label="ADD",  flat=True, id="add_category")
                 yield DataTable(id="categories_table")
-            with Vertical():
-                yield Label("ACTIVITIES")
-                yield Label("Activity")
-                yield Input(placeholder="Add a new activity", id="new_activity")
-                yield Label("Select a category")
-                yield Select([], type_to_search=True, id="category_select")
-                yield Input(id="activity_id", compact=True)
-                with Horizontal():
-                    yield Button(label="ADD",  flat=True, id="add_activity", variant="success")
-                    yield Button(label="UPDATE", flat=True, id="update_activity",variant="warning", disabled=True)
-                    yield Button(label="SUSPEND", flat=True, id="suspend_activity", variant="error", disabled=True)
-                    yield Button(label="CLEAR", flat=True, id="clear_activity_form", variant="default")
+            with Vertical(id="activity_module"):
+                with Vertical(id="activity_form"):
+                    yield Label("ACTIVITIES", classes="module_title")
+                    yield Label("Activity")
+                    yield Input(placeholder="Add a new activity", id="new_activity")
+                    yield Label("Select a category")
+                    yield Select([], type_to_search=True, id="category_select")
+                    yield Input(id="activity_id", compact=True)
+                    with Horizontal():
+                        yield Button(label="ADD",  flat=True, id="add_activity", variant="success")
+                        yield Button(label="UPDATE", flat=True, id="update_activity",variant="warning", disabled=True)
+                        yield Button(label="SUSPEND", flat=True, id="suspend_activity", variant="error", disabled=True)
+                        yield Button(label="CLEAR", flat=True, id="clear_activity_form", variant="default")
                 yield DataTable(id="activities_table", cursor_type="row")
 
     def on_mount(self) -> None:
