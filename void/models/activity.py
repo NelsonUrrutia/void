@@ -14,6 +14,7 @@ class Activity:
         with Connection() as db:
             sql = """
                 SELECT
+                    activities.id as "id",
                     activities.name as "activity",
                     categories.name as "category"
                 FROM activities
@@ -30,3 +31,23 @@ class Activity:
             data = (activity, category_id)
             sql = "INSERT INTO activities (name, category_id) VALUES(?, ?)"
             db.execute(sql, data)
+
+    def update_activity(self, activity_id, activity, category_id):
+        with Connection() as db:
+            data = (activity, category_id, activity_id)
+            sql = """
+                UPDATE activities
+                SET name = ?, category_id = ?
+                WHERE id = ?
+            """
+            db.execute(sql, data)
+
+    def suspend_activity(self, activity_id):
+            with Connection() as db:
+                data = (activity_id,)
+                sql = """
+                    UPDATE activities
+                    SET is_active = 0
+                    WHERE id = ?
+                """
+                db.execute(sql, data)
