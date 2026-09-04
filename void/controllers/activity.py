@@ -11,6 +11,14 @@ class ActivityController:
                 activities.append((item['id'], item['activity'], item['category']))
             return activities
 
+    def get_activities_by_category(self, category_id):
+        with Activity() as ac:
+            raw_activities = ac.get_activities_by_category(category_id)
+            activities = []
+            for item in raw_activities:
+                activities.append((item["id"], item['name']))
+            return activities
+
     def create_activity(self, activity, category_id):
         with Activity() as ac:
             ac.create_activity(activity, category_id)

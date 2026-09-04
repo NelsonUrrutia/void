@@ -1,7 +1,7 @@
 from textual.app import App, ComposeResult
 from textual.widgets import Footer, Header, TabbedContent, TabPane
 
-from void.views.activities import ActivitiesView
+from void.views.activity import ActivitiesView
 from void.views.collection import CollectionView
 from void.views.note import NoteView
 

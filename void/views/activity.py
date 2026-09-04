@@ -2,7 +2,7 @@ from typing import override
 
 from textual import on
 from textual.app import ComposeResult
-from textual.containers import Horizontal, HorizontalScroll, Vertical, VerticalScroll
+from textual.containers import Horizontal, Vertical
 from textual.widgets import Button, DataTable, Input, Label, Select, Static
 
 from void.controllers.activity import ActivityController
@@ -18,20 +18,20 @@ class ActivitiesView(Static):
         #category_module{
             height: auto;
             padding: 1 1;
-            width: 35%
+            width: 30%
         }
 
         #activity_module{
             padding: 1 1;
             height: 100%;
-            width: 60%;
+            width: 70%;
         }
 
         #activity_form{
             height: auto;
         }
 
-        #activity_form Horizontal{
+        #activity_form_cta_container{
             height: auto;
         }
 
@@ -62,7 +62,7 @@ class ActivitiesView(Static):
                     yield Label("Select a category")
                     yield Select([], type_to_search=True, id="category_select")
                     yield Input(id="activity_id", compact=True)
-                    with Horizontal():
+                    with Horizontal(id="activity_form_cta_container"):
                         yield Button(label="ADD",  flat=True, id="add_activity", variant="success")
                         yield Button(label="UPDATE", flat=True, id="update_activity",variant="warning", disabled=True)
                         yield Button(label="SUSPEND", flat=True, id="suspend_activity", variant="error", disabled=True)

@@ -26,6 +26,19 @@ class Activity:
             result = db.querying(sql)
             return result
 
+    def get_activities_by_category(self, category_id):
+        with Connection() as db:
+            sql = """
+                SELECT
+                    activities.id as "id",
+                    activities.name as "name"
+                FROM activities
+                WHERE
+                    activities.category_id = ?
+            """
+            result = db.querying(sql, (category_id,))
+            return result
+
     def create_activity(self, activity, category_id):
         with Connection() as db:
             data = (activity, category_id)
