@@ -35,6 +35,8 @@ class Activity:
                 FROM activities
                 WHERE
                     activities.category_id = ?
+                AND
+                    activities.is_active = 1
             """
             result = db.querying(sql, (category_id,))
             return result

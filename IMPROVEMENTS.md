@@ -1,5 +1,14 @@
 # Improvements
 
+## Error handling
+Instead of crashing the program, show an alert to indicate the issue.
+For example, if a user adds an activity with the same name in the 
+the same category - the app crashes. 
+
+## Success messages
+Add success alerts to the user.
+
+
 ## Cross-view refresh via message bubbling
 
 `NoteView` needs to know when `ActivitiesView` adds/updates/suspends an

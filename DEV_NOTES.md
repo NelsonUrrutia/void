@@ -1,8 +1,9 @@
 # Dev notes
 Install (just once)
-- `pip install -e .`
+- `source myvenv/bin/activate && pip install -e .`
 
 Run the project
+- `source myvenv/bin/activate`
 - `void`
 - `python -m void.main`
 - `python void/main.py`
