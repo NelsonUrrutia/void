@@ -4,9 +4,11 @@
 Instead of crashing the program, show an alert to indicate the issue.
 For example, if a user adds an activity with the same name in the 
 the same category - the app crashes. 
+Also with the unique date of the void note when user tries to add
+a note in the same day.
 
 ## Success messages
-Add success alerts to the user.
+Add success alerts to the user when adding, updating data.
 
 
 ## Cross-view refresh via message bubbling

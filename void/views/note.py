@@ -51,7 +51,7 @@ class NoteView(Static):
        self.activities_by_category_data = self.ctrl.get_activities_by_category()
 
 
-       self.today = date.today()
+       self.today = date.today()  # noqa: DTZ011
        self.date_str = self.today.strftime("%B %d, %Y").upper()
 
 
@@ -67,7 +67,7 @@ class NoteView(Static):
                     yield Label(category, classes="module_title")
                     with Grid(classes="activity_grid"):
                         for id, name in activities:
-                            handle = f"{self.handleize(name)}::{id}"
+                            handle = f"{id}::{self.handleize(name)}"
                             with Vertical(classes="activity_card"):
                                 yield Checkbox(label=name)
                                 yield Input(value=handle, classes="activity_handle")
@@ -90,8 +90,10 @@ class NoteView(Static):
         self.save_note(checked_activities)
 
     def save_note(self, activities):
-        date_str_input = self.query_one("#date_str", Input).value.strip()
-        self.log(date_str_input, activities)
+        date_str = self.query_one("#date_str", Input).value.strip()
+        self.ctrl.save_note(date_str, activities)
+        self.notify("VOID NOTE successfully saved", severity="information")
+        self.clear_form()
 
     def count_check_elements(self) -> int:
         counter = 0
@@ -99,6 +101,13 @@ class NoteView(Static):
             if checkbox.value:
                counter += 1
         return counter
+
+    def clear_form(self):
+        for checkbox in self.query(Checkbox):
+            checkbox.value = False
+
+        for textArea in self.query(TextArea):
+            textArea.text = ""
 
     def handleize(self, string_to_handle):
         return string_to_handle.lower().replace("'","").replace(" ", "-")

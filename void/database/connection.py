@@ -46,9 +46,11 @@ class Connection:
         return self.cursor.fetchall()
 
     def execute(self, sql, params=()):
-        """Run a parameterized INSERT/UPDATE/DELETE and commit the change."""
+        """Run a parameterized INSERT/UPDATE/DELETE, commit, and return the
+        id of the inserted row (lastrowid; meaningless for UPDATE/DELETE)."""
         self.cursor.execute(sql, params)
         self.connection.commit()
+        return self.cursor.lastrowid
 
     def close(self):
         """Close the database connection."""
