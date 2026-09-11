@@ -11,6 +11,36 @@ from void.views.note_form import NoteForm
 
 class VoidApp(App):
 
+    CSS = """
+        .header{
+            dock: top;
+            height: auto;
+            padding: 1 2 0 2;
+            border-bottom: solid $panel;
+        }
+        .main_container{
+            padding: 1 2;
+        }
+        .module_title{
+            text-style: bold;
+        }
+        #counter{
+            color: $text-muted;
+        }
+        .empty_state{
+            color: $text-muted;
+            padding: 1 0;
+        }
+        .note_card{
+            height: auto;
+            padding: 0 2;
+            border: round $primary;
+        }
+        .note_card Label{
+            width: 100%;
+        }
+    """
+
     def compose(self) -> ComposeResult:
         yield Header(icon="🧠")
 

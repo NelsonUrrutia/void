@@ -16,10 +16,6 @@ class ActivitiesView(Static):
         """Posted when the activity list changes, so NoteForm can re-render."""
 
     DEFAULT_CSS = """
-        .module_title{
-           text-style: bold;
-        }
-
         #category_module{
             height: auto;
             padding: 1 1;

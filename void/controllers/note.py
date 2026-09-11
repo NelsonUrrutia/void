@@ -20,6 +20,9 @@ class NoteController:
             categories_and_activities.append(data)
         return categories_and_activities
 
+    def get_activity_total(self):
+        return len(self.activity_ctrl.get_activities())
+
     def save_note(self, date_str, activities):
         with Note() as note:
             note_id = note.save_note(date_str)

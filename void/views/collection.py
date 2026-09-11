@@ -12,26 +12,11 @@ from void.controllers.note import NoteController
 class CollectionView(Static):
 
     DEFAULT_CSS = """
-        .header{
-            padding: 0 1;
-            height: auto;
-        }
-        .main_container{
-            padding: 1 1;
-        }
-        .module_title{
-            text-style: bold;
-        }
         .note_grid{
             grid-size: 3;
             grid-columns: 1fr;
             grid-gutter: 1;
             height: auto;
-        }
-        .note_card{
-            height: auto;
-            padding: 1 2;
-            border: round $primary;
         }
         .note_card_date{
             color: $text-muted;
@@ -40,9 +25,6 @@ class CollectionView(Static):
         .note_entry{
             height: auto;
             padding: 0 0 1 0;
-        }
-        .note_card Label{
-            width: 100%;
         }
     """
 

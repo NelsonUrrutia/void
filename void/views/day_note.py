@@ -1,4 +1,5 @@
 from datetime import date
+from itertools import groupby
 from typing import override
 
 from textual.app import ComposeResult
@@ -11,22 +12,23 @@ from void.controllers.note import NoteController
 class DayNote(Static):
 
     DEFAULT_CSS = """
-        .header{
-            padding: 0 1;
-            height: auto;
-        }
-        .main_container{
-            padding: 1 1;
-        }
-        .module_title{
+        .day_category_title{
             text-style: bold;
+            color: $text-muted;
         }
         .note_card{
-            height: auto;
-            padding: 0 0 1 0;
+            margin: 0 0 1 0;
         }
-        .note_card Label{
-            width: 100%;
+        .note_card_title{
+            text-style: bold;
+            color: $accent;
+        }
+        .note_card_note{
+            color: $text-muted;
+        }
+        .note_card_empty{
+            color: $text-muted;
+            text-style: italic;
         }
     """
 
@@ -43,10 +45,19 @@ class DayNote(Static):
         day_note_data = self.ctrl.get_day_note(self.today.isoformat())
         with Vertical(classes="header"):
             yield Label(self.date_str, classes="module_title")
+            yield Label(self.counter_text(len(day_note_data)), id="counter")
         with VerticalScroll(classes="main_container"):
             if not day_note_data:
-                yield Label("No VOID NOTE saved for today yet.")
-            for row in day_note_data:
-                with Vertical(classes="note_card"):
-                    yield Label(row["activity"], classes="module_title")
-                    yield Label(row["notes"] or "")
+                yield Label("No VOID NOTE saved for today yet.", classes="empty_state")
+            for category, rows in groupby(day_note_data, key=lambda row: row["category"]):
+                yield Label(f"── {category.upper()} ", classes="day_category_title")
+                for row in rows:
+                    with Vertical(classes="note_card"):
+                        yield Label(row["activity"], classes="note_card_title")
+                        if row["notes"]:
+                            yield Label(row["notes"], classes="note_card_note")
+                        else:
+                            yield Label("No notes written.", classes="note_card_empty")
+
+    def counter_text(self, logged: int) -> str:
+        return f"{logged} of {self.ctrl.get_activity_total()} activities logged"

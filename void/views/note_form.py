@@ -22,29 +22,14 @@ class NoteForm(Static):
         NoteForm{
             layout: vertical;
         }
-        .header{
-            dock: top;
-            height: auto;
-            padding: 1 2 0 2;
-            border-bottom: solid $panel;
-        }
         .actions{
             dock: bottom;
             height: auto;
             padding: 0 2 1 2;
             align-horizontal: right;
         }
-        .main_container{
-            padding: 1 2;
-        }
-        .module_title{
-            text-style: bold;
-        }
         #date_str{
             display: none;
-        }
-        #counter{
-            color: $text-muted;
         }
 
         .category_block{
@@ -82,7 +67,7 @@ class NoteForm(Static):
        super().__init__()
        self.ctrl = NoteController()
        self.activities_by_category_data = self.ctrl.get_activities_by_category()
-       self.activity_total = sum(len(activities) for _, _, activities in self.activities_by_category_data)
+       self.activity_total = self.ctrl.get_activity_total()
 
        self.today = date.today()  # noqa: DTZ011
        self.date_str = self.today.strftime("%B %d, %Y").upper()
