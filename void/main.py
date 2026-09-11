@@ -7,6 +7,7 @@ from void.views.collection import CollectionView
 from void.views.day_note import DayNote
 from void.views.note import NoteView
 from void.views.note_form import NoteForm
+from void.views.welcome import WelcomeScreen
 
 
 class VoidApp(App):
@@ -141,6 +142,7 @@ class VoidApp(App):
     def on_mount(self) -> None:
         self.title = "VOID"
         self.sub_title = "Vital Offline Information Diary"
+        self.push_screen(WelcomeScreen())
 
 def run() -> None:
     VoidApp().run()
