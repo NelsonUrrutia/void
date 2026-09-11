@@ -27,7 +27,10 @@ class NoteController:
                 activity_info, activity_note = activity
                 self.save_note_details(note_id, activity_info, activity_note)
 
-
     def save_note_details(self, note_id, activity_info, activity_note):
         with Note() as note:
             note.save_note_detail(note_id, activity_info, activity_note)
+
+    def get_day_note(self, date_str):
+        with Note() as note:
+            return note.get_day_note(date_str)
