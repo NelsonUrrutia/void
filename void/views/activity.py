@@ -3,6 +3,7 @@ from typing import override
 from textual import on
 from textual.app import ComposeResult
 from textual.containers import Horizontal, Vertical
+from textual.message import Message
 from textual.widgets import Button, DataTable, Input, Label, Select, Static
 
 from void.controllers.activity import ActivityController
@@ -10,6 +11,10 @@ from void.controllers.category import CategoryController
 
 
 class ActivitiesView(Static):
+
+    class Changed(Message):
+        """Posted when the activity list changes, so NoteForm can re-render."""
+
     DEFAULT_CSS = """
         .module_title{
            text-style: bold;
@@ -139,6 +144,7 @@ class ActivitiesView(Static):
         self.add_activity_input.value = ""
         self.category_selector.clear()
         self.update_activities()
+        self.post_message(self.Changed())
 
     @on(Button.Pressed, "#update_activity")
     def on_update_activity(self) -> None:
@@ -156,6 +162,7 @@ class ActivitiesView(Static):
         self.ctrl.update_activity(activity_id, activity, category_id)
         self.update_activities()
         self.clear_activity_form()
+        self.post_message(self.Changed())
 
     @on(Button.Pressed, "#suspend_activity")
     def on_suspend_activity(self) -> None:
@@ -163,6 +170,7 @@ class ActivitiesView(Static):
         self.ctrl.suspend_activity(activity_id)
         self.clear_activity_form()
         self.update_activities()
+        self.post_message(self.Changed())
 
 
 

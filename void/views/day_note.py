@@ -34,14 +34,16 @@ class DayNote(Static):
 
         self.today = date.today()  # noqa: DTZ011
         self.date_str = self.today.strftime("%B %d, %Y").upper()
-        self.day_note_data = self.ctrl.get_day_note(self.today.isoformat())
 
     @override
     def compose(self) -> ComposeResult:
+        day_note_data = self.ctrl.get_day_note(self.today.isoformat())
         with Vertical(classes="header"):
             yield Label(self.date_str, classes="module_title")
         with VerticalScroll(classes="main_container"):
-            for row in self.day_note_data:
+            if not day_note_data:
+                yield Label("No VOID NOTE saved for today yet.")
+            for row in day_note_data:
                 with Vertical(classes="note_card"):
                     yield Label(row["activity"], classes="module_title")
                     yield Label(row["notes"] or "")

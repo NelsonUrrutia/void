@@ -1,11 +1,11 @@
 from datetime import date
 from typing import override
 
+from textual import on
 from textual.app import ComposeResult
-from textual.widgets import Static
+from textual.widgets import Label, Static
 
 from void.controllers.note import NoteController
-from void.views.day_note import DayNote
 from void.views.note_form import NoteForm
 
 
@@ -23,6 +23,10 @@ class NoteView(Static):
    def compose(self) -> ComposeResult:
        created_note_of_the_day = self.ctrl.get_day_note(self.today.isoformat())
        if created_note_of_the_day:
-           yield DayNote()
+           yield Label("VOID NOTE already saved for today. See the VOID DAY NOTE tab.")
        else:
            yield NoteForm()
+
+   @on(NoteForm.Saved)
+   async def on_note_saved(self) -> None:
+       await self.recompose()

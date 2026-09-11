@@ -4,12 +4,16 @@ from typing import override
 from textual import on
 from textual.app import ComposeResult
 from textual.containers import Grid, Vertical, VerticalScroll
+from textual.message import Message
 from textual.widgets import Button, Checkbox, Input, Label, Static, TextArea
 
 from void.controllers.note import NoteController
 
 
 class NoteForm(Static):
+
+    class Saved(Message):
+        """Posted once the day's note is stored, so NoteView can swap to DayNote."""
 
     DEFAULT_CSS = """
         .header{
@@ -55,13 +59,20 @@ class NoteForm(Static):
        self.date_str = self.today.strftime("%B %d, %Y").upper()
        self.date_iso = self.today.isoformat()
 
+       day_note_data = self.ctrl.get_day_note(self.today.isoformat())
+
+       self.disable_add_note_btn = False
+       if day_note_data:
+           self.disable_add_note_btn = True
+
+
 
     @override
     def compose(self) -> ComposeResult:
         with Vertical(classes="header"):
                 yield Label(self.date_str, classes="module_title")
                 yield Input(value=self.date_iso, id="date_str")
-                yield Button("SAVE VOID NOTE", id="save_note_btn", variant="success", flat=True)
+                yield Button("SAVE VOID NOTE", id="save_note_btn", variant="success", flat=True, disabled=self.disable_add_note_btn)
         with VerticalScroll(classes="main_container"):
             for _, category, activities in self.activities_by_category_data:
                 if activities:
@@ -94,7 +105,7 @@ class NoteForm(Static):
         date_str = self.query_one("#date_str", Input).value.strip()
         self.ctrl.save_note(date_str, activities)
         self.notify("VOID NOTE successfully saved", severity="information")
-        self.clear_form()
+        self.post_message(self.Saved())
 
     def count_check_elements(self) -> int:
         counter = 0
@@ -102,13 +113,6 @@ class NoteForm(Static):
             if checkbox.value:
                counter += 1
         return counter
-
-    def clear_form(self):
-        for checkbox in self.query(Checkbox):
-            checkbox.value = False
-
-        for textArea in self.query(TextArea):
-            textArea.text = ""
 
     def handleize(self, string_to_handle):
         return string_to_handle.lower().replace("'","").replace(" ", "-")
