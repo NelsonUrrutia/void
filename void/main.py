@@ -12,6 +12,7 @@ from void.views.note_form import NoteForm
 class VoidApp(App):
 
     CSS = """
+        /* LAYOUT */
         .header{
             dock: top;
             height: auto;
@@ -21,8 +22,18 @@ class VoidApp(App):
         .main_container{
             padding: 1 2;
         }
+        .card_grid{
+            grid-columns: 1fr;
+            height: auto;
+        }
+
+        /* TITLES */
         .module_title{
             text-style: bold;
+        }
+        .section_title{
+            text-style: bold;
+            color: $text-muted;
         }
         #counter{
             color: $text-muted;
@@ -31,6 +42,8 @@ class VoidApp(App):
             color: $text-muted;
             padding: 1 0;
         }
+
+        /* CARDS */
         .note_card{
             height: auto;
             padding: 0 2;
@@ -38,6 +51,60 @@ class VoidApp(App):
         }
         .note_card Label{
             width: 100%;
+        }
+
+        /* LOGGED ACTIVITY ENTRY */
+        .entry_card{
+            height: auto;
+            margin: 0 0 1 0;
+            padding: 0 0 0 2;
+            border-left: thick $accent;
+        }
+        .entry_card Label{
+            width: 100%;
+        }
+        .entry_title{
+            text-style: bold;
+        }
+        .entry_note{
+            color: $text-muted;
+        }
+        .entry_empty{
+            color: $text-muted;
+            text-style: italic;
+        }
+
+        /* CENTERED STATE SCREENS */
+        .state_screen{
+            height: 1fr;
+            align: center middle;
+        }
+        .state_card{
+            width: 60;
+            max-width: 100%;
+            height: auto;
+            padding: 1 2;
+            border: round $panel;
+        }
+        .state_card Label{
+            width: 100%;
+            text-align: center;
+        }
+        .state_card_success{
+            border: round $success;
+        }
+        .state_title{
+            text-style: bold;
+        }
+        .state_success{
+            color: $success;
+        }
+        .state_muted{
+            color: $text-muted;
+        }
+        .state_hint{
+            color: $text-muted;
+            padding: 0 0 1 0;
         }
     """
 

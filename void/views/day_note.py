@@ -14,29 +14,6 @@ from void.controllers.note import NoteController
 class DayNote(Static):
 
     DEFAULT_CSS = """
-        .day_section_title{
-            text-style: bold;
-            color: $text-muted;
-        }
-        .day_card{
-            height: auto;
-            margin: 0 0 1 0;
-            padding: 0 0 0 2;
-            border-left: thick $accent;
-        }
-        .day_card Label{
-            width: 100%;
-        }
-        .day_card_title{
-            text-style: bold;
-        }
-        .day_card_note{
-            color: $text-muted;
-        }
-        .day_card_empty{
-            color: $text-muted;
-            text-style: italic;
-        }
         .day_logged{
             width: 2fr;
         }
@@ -55,28 +32,6 @@ class DayNote(Static):
             color: $text-disabled;
             padding: 0 0 0 2;
             border-left: thick $panel;
-        }
-        .empty_day{
-            height: 1fr;
-            align: center middle;
-        }
-        .empty_card{
-            width: 60;
-            max-width: 100%;
-            height: auto;
-            padding: 1 2;
-            border: round $panel;
-        }
-        .empty_card Label{
-            width: 100%;
-            text-align: center;
-        }
-        .empty_title{
-            text-style: bold;
-        }
-        .empty_hint{
-            color: $text-muted;
-            padding: 0 0 1 0;
         }
     """
 
@@ -106,9 +61,9 @@ class DayNote(Static):
             yield Label(self.counter_text(len(day_note_data), len(activities)), id="counter")
 
         if not day_note_data:
-            with Vertical(classes="empty_day"), Vertical(classes="empty_card"):
-                yield Label("NOTHING LOGGED TODAY", classes="empty_title")
-                yield Label("Write today's VOID NOTE to fill the void.", classes="empty_hint")
+            with Vertical(classes="state_screen"), Vertical(classes="state_card"):
+                yield Label("NOTHING LOGGED TODAY", classes="state_title")
+                yield Label("Write today's VOID NOTE to fill the void.", classes="state_hint")
                 with Center():
                     yield Button("WRITE VOID NOTE", id="go_to_note", variant="primary", flat=True)
             return
@@ -119,19 +74,19 @@ class DayNote(Static):
                     rows = list(group)
                     yield Label(
                         f"── {category.upper()} · {len(rows)} of {per_category[category]} ",
-                        classes="day_section_title",
+                        classes="section_title",
                     )
                     for row in rows:
-                        with Vertical(classes="day_card"):
-                            yield Label(row["activity"], classes="day_card_title")
+                        with Vertical(classes="entry_card"):
+                            yield Label(row["activity"], classes="entry_title")
                             if row["notes"]:
-                                yield Label(row["notes"], classes="day_card_note")
+                                yield Label(row["notes"], classes="entry_note")
                             else:
-                                yield Label("No notes written.", classes="day_card_empty")
+                                yield Label("No notes written.", classes="entry_empty")
 
             if pending:
                 with VerticalScroll(classes="day_pending"):
-                    yield Label(f"── NOT LOGGED · {len(pending)} ", classes="day_section_title")
+                    yield Label(f"── NOT LOGGED · {len(pending)} ", classes="section_title")
                     for category, group in groupby(pending, key=lambda item: item[0]):
                         yield Label(category.upper(), classes="pending_category")
                         for _, name in group:

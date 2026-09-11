@@ -43,9 +43,7 @@ class NoteForm(Static):
         }
         .activity_grid{
             grid-size: 2;
-            grid-columns: 1fr;
             grid-gutter: 1 2;
-            height: auto;
         }
         .activity_card{
             height: auto;
@@ -94,7 +92,7 @@ class NoteForm(Static):
                 if activities:
                     with Vertical(classes="category_block"):
                         yield Label(f"── {category} ", classes="category_title")
-                        with Grid(classes="activity_grid"):
+                        with Grid(classes="card_grid activity_grid"):
                             for id, name in activities:
                                 handle = f"{id}::{self.handleize(name)}"
                                 with Vertical(classes="activity_card"):

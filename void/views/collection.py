@@ -14,16 +14,10 @@ class CollectionView(Static):
     DEFAULT_CSS = """
         .note_grid{
             grid-size: 3;
-            grid-columns: 1fr;
             grid-gutter: 1;
-            height: auto;
         }
         .note_card_date{
             color: $text-muted;
-            padding: 0 0 1 0;
-        }
-        .note_entry{
-            height: auto;
             padding: 0 0 1 0;
         }
     """
@@ -42,14 +36,17 @@ class CollectionView(Static):
             if not notes:
                 yield Label("No VOID NOTE saved yet.")
                 return
-            with Grid(classes="note_grid"):
+            with Grid(classes="card_grid note_grid"):
                 for note_date, rows in groupby(notes, key=lambda row: row["note_date"]):
                     with Vertical(classes="note_card"):
                         yield Label(self.format_date(note_date), classes="note_card_date")
                         for row in rows:
-                            with Vertical(classes="note_entry"):
-                                yield Label(row["activity"], classes="module_title")
-                                yield Label(row["notes"] or "")
+                            with Vertical(classes="entry_card"):
+                                yield Label(row["activity"], classes="entry_title")
+                                if row["notes"]:
+                                    yield Label(row["notes"], classes="entry_note")
+                                else:
+                                    yield Label("No notes written.", classes="entry_empty")
 
     def format_date(self, date_str):
         return date.fromisoformat(date_str).strftime("%B %d, %Y").upper()

@@ -12,33 +12,6 @@ from void.views.note_form import NoteForm
 
 class NoteView(Static):
 
-   DEFAULT_CSS = """
-        .saved_state{
-            height: 1fr;
-            align: center middle;
-        }
-        .saved_card{
-            width: 60;
-            max-width: 100%;
-            height: auto;
-            padding: 1 2;
-            border: round $success;
-        }
-        .saved_card Label{
-            width: 100%;
-            text-align: center;
-        }
-        .saved_title{
-            text-style: bold;
-            color: $success;
-        }
-        .saved_date, .saved_hint{
-            color: $text-muted;
-        }
-        .saved_hint{
-            padding: 0 0 1 0;
-        }
-   """
 
    @override
    def __init__(self) -> None:
@@ -52,10 +25,10 @@ class NoteView(Static):
    def compose(self) -> ComposeResult:
        created_note_of_the_day = self.ctrl.get_day_note(self.today.isoformat())
        if created_note_of_the_day:
-           with Vertical(classes="saved_state"), Vertical(classes="saved_card"):
-               yield Label(self.date_str, classes="saved_date")
-               yield Label("VOID NOTE SAVED", classes="saved_title")
-               yield Label(self.hint_text(len(created_note_of_the_day)), classes="saved_hint")
+           with Vertical(classes="state_screen"), Vertical(classes="state_card state_card_success"):
+               yield Label(self.date_str, classes="state_muted")
+               yield Label("VOID NOTE SAVED", classes="state_title state_success")
+               yield Label(self.hint_text(len(created_note_of_the_day)), classes="state_hint")
                with Center():
                    yield Button("SEE VOID DAY", id="go_to_day_note", variant="success", flat=True)
        else:
