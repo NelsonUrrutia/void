@@ -21,11 +21,12 @@ class NoteView(Static):
 
    @override
    def compose(self) -> ComposeResult:
-       created_note_of_the_day = self.ctrl.get_day_note(self.today.isoformat())
-       if created_note_of_the_day:
-           yield Label("VOID NOTE already saved for today. See the VOID DAY NOTE tab.")
-       else:
-           yield NoteForm()
+       yield NoteForm()
+       # created_note_of_the_day = self.ctrl.get_day_note(self.today.isoformat())
+       # if created_note_of_the_day:
+           # yield Label("VOID NOTE already saved for today. See the VOID DAY NOTE tab.")
+       # else:
+           # yield NoteForm()
 
    @on(NoteForm.Saved)
    async def on_note_saved(self) -> None:
