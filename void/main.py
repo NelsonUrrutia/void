@@ -49,7 +49,7 @@ class VoidApp(App):
             with TabPane("VOID NOTE", id="void_note"):
                 yield NoteView()
 
-            with TabPane("VOID DAY NOTE", id="void_day_note"):
+            with TabPane("VOID DAY", id="void_day_note"):
                 yield DayNote()
 
             with TabPane("VOID COLLECTION", id="void_collection"):

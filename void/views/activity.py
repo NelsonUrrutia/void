@@ -17,23 +17,38 @@ class ActivitiesView(Static):
 
     DEFAULT_CSS = """
         #category_module{
-            height: auto;
-            padding: 1 1;
-            width: 30%
+            height: 1fr;
+            padding: 0 2 0 0;
+            width: 30%;
+            border-right: solid $panel;
         }
 
         #activity_module{
-            padding: 1 1;
-            height: 100%;
+            padding: 0 0 0 2;
+            height: 1fr;
             width: 70%;
+        }
+
+        .field_label{
+            margin: 1 0 0 0;
+        }
+
+        #add_category{
+            margin: 1 0;
         }
 
         #activity_form{
             height: auto;
+            margin: 0 0 1 0;
         }
 
         #activity_form_cta_container{
             height: auto;
+            margin: 1 0 0 0;
+        }
+
+        #activity_form_cta_container Button{
+            margin: 0 1 0 0;
         }
 
         #activities_table{
@@ -47,20 +62,29 @@ class ActivitiesView(Static):
     """
 
     @override
+    def __init__(self) -> None:
+        super().__init__()
+        self.ctrl = ActivityController()
+        self.categoriesCtrl = CategoryController()
+
+    @override
     def compose(self) -> ComposeResult:
-        with Horizontal():
+        with Vertical(classes="header"):
+            yield Label("VOID ACTIVITIES", classes="module_title")
+            yield Label(self.counter_text(), id="counter")
+        with Horizontal(classes="main_container"):
             with Vertical(id="category_module"):
                 yield Label("CATEGORIES", classes="module_title")
-                yield Label("New Category")
+                yield Label("New Category", classes="field_label")
                 yield Input(placeholder="Add a new category", id="new_category")
                 yield Button(label="ADD",  flat=True, id="add_category")
                 yield DataTable(id="categories_table")
             with Vertical(id="activity_module"):
                 with Vertical(id="activity_form"):
                     yield Label("ACTIVITIES", classes="module_title")
-                    yield Label("Activity")
+                    yield Label("Activity", classes="field_label")
                     yield Input(placeholder="Add a new activity", id="new_activity")
-                    yield Label("Select a category")
+                    yield Label("Select a category", classes="field_label")
                     yield Select([], type_to_search=True, id="category_select")
                     yield Input(id="activity_id", compact=True)
                     with Horizontal(id="activity_form_cta_container"):
@@ -71,10 +95,6 @@ class ActivitiesView(Static):
                 yield DataTable(id="activities_table", cursor_type="row")
 
     def on_mount(self) -> None:
-        # Controller
-        self.ctrl = ActivityController()
-        self.categoriesCtrl = CategoryController()
-
         # Category inputs
         self.add_category_input = self.query_one("#new_category", Input)
         self.add_category_btn = self.query_one("#add_category", Button)
@@ -94,6 +114,14 @@ class ActivitiesView(Static):
         self.init_categories_selector()
         self.init_categories_table()
 
+    def counter_text(self) -> str:
+        activities = len(self.ctrl.get_activities())
+        categories = len(self.categoriesCtrl.get_categories())
+        return f"{activities} activities in {categories} categories"
+
+    def update_counter(self) -> None:
+        self.query_one("#counter", Label).update(self.counter_text())
+
     def init_activities_table(self):
         activities = self.ctrl.get_activities()
         self.activities_table.add_columns("ID","ACTIVITY", "CATEGORY")
@@ -112,12 +140,14 @@ class ActivitiesView(Static):
         activities = self.ctrl.get_activities()
         self.activities_table.clear()
         self.activities_table.add_rows(activities)
+        self.update_counter()
 
     def update_categories(self):
         categories = self.categoriesCtrl.get_categories()
         self.categories_table.clear()
         self.categories_table.add_rows(categories)
         self.init_categories_selector()
+        self.update_counter()
 
 
     @on(Button.Pressed, "#clear_activity_form")

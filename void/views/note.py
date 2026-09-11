@@ -57,7 +57,7 @@ class NoteView(Static):
                yield Label("VOID NOTE SAVED", classes="saved_title")
                yield Label(self.hint_text(len(created_note_of_the_day)), classes="saved_hint")
                with Center():
-                   yield Button("SEE VOID DAY NOTE", id="go_to_day_note", variant="success", flat=True)
+                   yield Button("SEE VOID DAY", id="go_to_day_note", variant="success", flat=True)
        else:
            yield NoteForm()
 
