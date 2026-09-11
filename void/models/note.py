@@ -37,6 +37,7 @@ class Note:
             void_note.id as "note_id",
             void_note.note_date as "note_date",
             void_note_details.id as "detail_id",
+            activities.id as "activity_id",
             activities.name as "activity",
             categories.name as "category",
             void_note_details.notes as "notes"

@@ -20,8 +20,12 @@ class NoteController:
             categories_and_activities.append(data)
         return categories_and_activities
 
+    def get_activities(self):
+        """Every active activity as (id, name, category)."""
+        return self.activity_ctrl.get_activities()
+
     def get_activity_total(self):
-        return len(self.activity_ctrl.get_activities())
+        return len(self.get_activities())
 
     def save_note(self, date_str, activities):
         with Note() as note:
