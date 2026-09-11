@@ -1,3 +1,5 @@
+import sqlite3
+
 from void.models.category import Category
 
 
@@ -18,6 +20,11 @@ class CategoryController:
                 categories.append((item['category'],))
             return categories
 
-    def create_category(self, category):
+    def create_category(self, category) -> bool:
+        """Return False when a category with that name already exists."""
         with Category() as ca:
-            ca.create_category(category)
+            try:
+                ca.create_category(category)
+            except sqlite3.IntegrityError:
+                return False
+        return True

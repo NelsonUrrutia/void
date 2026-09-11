@@ -140,7 +140,10 @@ class ActivitiesView(Static):
             self.notify("Category must be set", severity="error")
             return
 
-        self.ctrl.create_activity(activity, category_id)
+        if not self.ctrl.create_activity(activity, category_id):
+            self.notify(f"'{activity}' already exists in that category", severity="error")
+            return
+
         self.add_activity_input.value = ""
         self.category_selector.clear()
         self.update_activities()
@@ -159,7 +162,10 @@ class ActivitiesView(Static):
             self.notify("Category must be set", severity="error")
             return
 
-        self.ctrl.update_activity(activity_id, activity, category_id)
+        if not self.ctrl.update_activity(activity_id, activity, category_id):
+            self.notify(f"'{activity}' already exists in that category", severity="error")
+            return
+
         self.update_activities()
         self.clear_activity_form()
         self.post_message(self.Changed())
@@ -181,7 +187,10 @@ class ActivitiesView(Static):
             self.notify("Category must be set", severity="error")
             return
 
-        self.categoriesCtrl.create_category(category)
+        if not self.categoriesCtrl.create_category(category):
+            self.notify(f"Category '{category}' already exists", severity="error")
+            return
+
         self.add_category_input.value = ""
         self.update_categories()
 
