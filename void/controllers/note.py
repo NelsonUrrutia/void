@@ -34,3 +34,7 @@ class NoteController:
     def get_day_note(self, date_str):
         with Note() as note:
             return note.get_day_note(date_str)
+
+    def get_notes(self):
+        with Note() as note:
+            return note.get_notes()

@@ -25,6 +25,9 @@ class DayNote(Static):
             height: auto;
             padding: 0 0 1 0;
         }
+        .note_card Label{
+            width: 100%;
+        }
     """
 
     @override

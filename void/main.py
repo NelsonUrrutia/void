@@ -34,6 +34,7 @@ class VoidApp(App):
     @on(NoteForm.Saved)
     async def on_note_saved(self) -> None:
         await self.query_one(DayNote).recompose()
+        await self.query_one(CollectionView).recompose()
         self.query_one(TabbedContent).active = "void_day_note"
 
     @on(ActivitiesView.Changed)

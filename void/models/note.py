@@ -32,23 +32,28 @@ class Note:
             """
             return db.execute(sql, data)
 
+    NOTE_SQL = """
+        SELECT
+            void_note.id as "note_id",
+            void_note.note_date as "note_date",
+            void_note_details.id as "detail_id",
+            activities.name as "activity",
+            void_note_details.notes as "notes"
+        FROM void_note
+        INNER JOIN
+            void_note_details
+                ON void_note_details.void_note_id = void_note.id
+        INNER JOIN
+            activities ON activities.id = void_note_details.activity_id
+        WHERE void_note.is_active = 1
+        AND void_note_details.is_active = 1
+    """
+
     def get_day_note(self, date_str):
         with Connection() as db:
-            sql = """
-                SELECT
-                    void_note.id as "note_id",
-                    void_note.note_date as "note_date",
-                    void_note_details.id as "detail_id",
-                    activities.name as "activity",
-                    void_note_details.notes as "notes"
-                FROM void_note
-                INNER JOIN
-                    void_note_details
-                        ON void_note_details.void_note_id = void_note.id
-                INNER JOIN
-                    activities ON activities.id = void_note_details.activity_id
-                WHERE void_note.note_date = ?
-                AND void_note.is_active = 1
-                AND void_note_details.is_active = 1
-            """
-            return db.querying(sql, (date_str,))
+            return db.querying(self.NOTE_SQL + " AND void_note.note_date = ?", (date_str,))
+
+    def get_notes(self):
+        """Every saved note detail, newest day first."""
+        with Connection() as db:
+            return db.querying(self.NOTE_SQL + " ORDER BY void_note.note_date DESC, void_note_details.id")
