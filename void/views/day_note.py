@@ -31,7 +31,7 @@ class DayNote(Static):
         .pending_item{
             color: $text-disabled;
             padding: 0 0 0 2;
-            border-left: thick $panel;
+            border-left: thick $primary;
         }
     """
 
@@ -63,7 +63,7 @@ class DayNote(Static):
         if not day_note_data:
             with Vertical(classes="state_screen"), Vertical(classes="state_card"):
                 yield Label("NOTHING LOGGED TODAY", classes="state_title")
-                yield Label("Write today's VOID NOTE to fill the void.", classes="state_hint")
+                yield Label("Write today's note to fill the void.", classes="state_hint")
                 with Center():
                     yield Button("WRITE VOID NOTE", id="go_to_note", variant="primary", flat=True)
             return

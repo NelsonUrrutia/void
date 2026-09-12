@@ -18,7 +18,7 @@ class VoidApp(App):
             dock: top;
             height: auto;
             padding: 1 2 0 2;
-            border-bottom: solid $panel;
+            border-bottom: solid $primary;
         }
         .main_container{
             padding: 1 2;
@@ -59,7 +59,7 @@ class VoidApp(App):
             height: auto;
             margin: 0 0 1 0;
             padding: 0 0 0 2;
-            border-left: thick $accent;
+            border-left: thick $primary;
         }
         .entry_card Label{
             width: 100%;

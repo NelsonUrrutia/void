@@ -20,7 +20,7 @@ class ActivitiesView(Static):
             height: 1fr;
             padding: 0 2 0 0;
             width: 30%;
-            border-right: solid $panel;
+            border-right: solid $primary;
         }
 
         #activity_module{
