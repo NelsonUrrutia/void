@@ -1,11 +1,13 @@
 import sqlite3
 from pathlib import Path
 
+DB_PATH = Path(__file__).parent / "void.db"
+
 
 class Connection:
     def __init__(self):
         """Connect to void.db and configure results as name-accessible rows."""
-        self.db_path = Path(__file__).parent / "void.db"
+        self.db_path = DB_PATH
         self.tables_script = Path(__file__).parent /  "init_tables.sql"
         self.test_data_script = Path(__file__).parent / "test_data.sql"
 

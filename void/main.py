@@ -2,6 +2,7 @@ from textual import on
 from textual.app import App, ComposeResult
 from textual.widgets import Footer, Header, TabbedContent, TabPane
 
+from void.database import initialize_database
 from void.views.activity import ActivitiesView
 from void.views.collection import CollectionView
 from void.views.day_note import DayNote
@@ -145,6 +146,7 @@ class VoidApp(App):
         self.push_screen(WelcomeScreen())
 
 def run() -> None:
+    initialize_database()
     VoidApp().run()
 
 if __name__ == "__main__":
