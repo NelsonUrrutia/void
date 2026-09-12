@@ -1,11 +1,11 @@
 ```
- █████   █████    ███████    █████ ██████████  
-░░███   ░░███   ███░░░░░███ ░░███ ░░███░░░░███ 
+ █████   █████    ███████    █████ ██████████
+░░███   ░░███   ███░░░░░███ ░░███ ░░███░░░░███
  ░███    ░███  ███     ░░███ ░███  ░███   ░░███
  ░███    ░███ ░███      ░███ ░███  ░███    ░███
  ░░███   ███  ░███      ░███ ░███  ░███    ░███
-  ░░░█████░   ░░███     ███  ░███  ░███    ███ 
-    ░░███      ░░░███████░   █████ ██████████  
+  ░░░█████░   ░░███     ███  ░███  ░███    ███
+    ░░███      ░░░███████░   █████ ██████████
      ░░░         ░░░░░░░    ░░░░░ ░░░░░░░░░░
 ```
 
@@ -16,6 +16,7 @@
 > **VOID** is an offline diary to be used in the terminal.
 
 I made VOID with these goals in mind:
+
 1. Make something useful for me, and feel accomplished delivering a usable piece of
    software - at least for myself.
 2. Learn Python and SQLite. I wanted to do something different from my regular job and
@@ -41,4 +42,4 @@ I made it public so there's proof on the Internet of my work.
 
 ### How to install
 
-The project is available on PyPI, so you can install it with `pipx install void`.
+The project is available on PyPI, so you can install it with `pipx install voidcli`.
