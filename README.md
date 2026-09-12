@@ -43,3 +43,7 @@ I made it public so there's proof on the Internet of my work.
 ### How to install
 
 The project is available on PyPI, so you can install it with `pipx install voidcli`.
+
+### How to use
+
+After installation, run `void` in your terminal.
