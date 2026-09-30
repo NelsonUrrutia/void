@@ -5,6 +5,7 @@ from textual.app import ComposeResult
 from textual.containers import Horizontal, Vertical
 from textual.message import Message
 from textual.widgets import Button, DataTable, Input, Label, Select, Static
+from textual.widgets._select import SelectCurrent
 
 from void.controllers.activity import ActivityController
 from void.controllers.category import CategoryController
@@ -29,7 +30,7 @@ class ActivitiesView(Static):
             width: 70%;
         }
 
-        .field_label{
+        #new_category, #new_activity, #category_select{
             margin: 1 0 0 0;
         }
 
@@ -75,17 +76,14 @@ class ActivitiesView(Static):
         with Horizontal(classes="main_container"):
             with Vertical(id="category_module"):
                 yield Label("CATEGORIES", classes="module_title")
-                yield Label("New Category", classes="field_label")
-                yield Input(placeholder="Add a new category", id="new_category")
+                yield Input(placeholder="Add a new category", id="new_category", classes="field")
                 yield Button(label="ADD",  flat=True, id="add_category")
                 yield DataTable(id="categories_table")
             with Vertical(id="activity_module"):
                 with Vertical(id="activity_form"):
                     yield Label("ACTIVITIES", classes="module_title")
-                    yield Label("Activity", classes="field_label")
-                    yield Input(placeholder="Add a new activity", id="new_activity")
-                    yield Label("Select a category", classes="field_label")
-                    yield Select([], type_to_search=True, id="category_select")
+                    yield Input(placeholder="Add a new activity", id="new_activity", classes="field")
+                    yield Select([], type_to_search=True, id="category_select", classes="field")
                     yield Input(id="activity_id", compact=True)
                     with Horizontal(id="activity_form_cta_container"):
                         yield Button(label="ADD",  flat=True, id="add_activity", variant="success")
@@ -109,6 +107,12 @@ class ActivitiesView(Static):
         self.suspend_activity_btn = self.query_one("#suspend_activity", Button)
         self.clear_activity_form_btn = self.query_one("#clear_activity_form", Button)
         self.activities_table = self.query_one("#activities_table", DataTable)
+
+        # Border titles
+        self.add_category_input.border_title = "New Category"
+        self.add_activity_input.border_title = "Activity"
+        # Select draws its border on its inner SelectCurrent widget
+        self.category_selector.query_one(SelectCurrent).border_title = "Select a category"
 
         self.init_activities_table()
         self.init_categories_selector()

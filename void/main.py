@@ -45,11 +45,43 @@ class VoidApp(App):
             padding: 1 0;
         }
 
+        /* FORM FIELDS */
+        .field, Select.field > SelectCurrent{
+            border: round $panel-lighten-2;
+            border-title-color: $text-muted;
+            background: transparent;
+            padding: 1 2;
+        }
+        Input.field, Select.field > SelectCurrent{
+            height: 5;
+        }
+        .field:focus, Select.field:focus > SelectCurrent{
+            border: round $primary;
+            border-title-color: $primary;
+            border-title-style: bold;
+        }
+        Select.field, Select.field:focus{
+            border: none;
+            padding: 0;
+        }
+        TextArea.field > .text-area--cursor-line{
+            background: transparent;
+        }
+        Select.field > SelectOverlay{
+            border: round $primary;
+            background: $background;
+        }
+        Checkbox.field.-on{
+            border: round $success;
+        }
+
         /* CARDS */
         .note_card{
             height: auto;
-            padding: 0 2;
-            border: round $primary;
+            padding: 1 2 0 2;
+            border: round $primary 40%;
+            border-title-color: $accent;
+            border-title-style: bold;
         }
         .note_card Label{
             width: 100%;

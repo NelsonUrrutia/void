@@ -34,12 +34,11 @@ class NoteForm(Static):
 
         .category_block{
             height: auto;
-            padding: 0 0 1 0;
-        }
-        .category_title{
-            text-style: bold;
-            color: $accent;
-            padding: 0 0 1 0;
+            margin: 0 0 1 0;
+            padding: 1 1 0 1;
+            border: round $primary 40%;
+            border-title-color: $accent;
+            border-title-style: bold;
         }
         .activity_grid{
             grid-size: 2;
@@ -53,7 +52,7 @@ class NoteForm(Static):
             width: 100%;
         }
         .activity_card TextArea{
-            height: 6;
+            height: 8;
         }
         .activity_handle{
             display: none;
@@ -90,15 +89,17 @@ class NoteForm(Static):
         with VerticalScroll(classes="main_container"):
             for _, category, activities in self.activities_by_category_data:
                 if activities:
-                    with Vertical(classes="category_block"):
-                        yield Label(f"── {category} ", classes="category_title")
+                    with Vertical(classes="category_block") as block:
+                        block.border_title = category
                         with Grid(classes="card_grid activity_grid"):
                             for id, name in activities:
                                 handle = f"{id}::{self.handleize(name)}"
                                 with Vertical(classes="activity_card"):
-                                    yield Checkbox(label=name)
+                                    yield Checkbox(label=name, classes="field")
                                     yield Input(value=handle, classes="activity_handle")
-                                    yield TextArea()
+                                    notes = TextArea(classes="field")
+                                    notes.border_title = "Notes"
+                                    yield notes
 
     @on(Checkbox.Changed)
     def on_activity_toggled(self) -> None:

@@ -16,10 +16,6 @@ class CollectionView(Static):
             grid-size: 3;
             grid-gutter: 1;
         }
-        .note_card_date{
-            color: $text-muted;
-            padding: 0 0 1 0;
-        }
     """
 
     @override
@@ -38,8 +34,8 @@ class CollectionView(Static):
                 return
             with Grid(classes="card_grid note_grid"):
                 for note_date, rows in groupby(notes, key=lambda row: row["note_date"]):
-                    with Vertical(classes="note_card"):
-                        yield Label(self.format_date(note_date), classes="note_card_date")
+                    with Vertical(classes="note_card") as card:
+                        card.border_title = self.format_date(note_date)
                         for row in rows:
                             with Vertical(classes="entry_card"):
                                 yield Label(row["activity"], classes="entry_title")
