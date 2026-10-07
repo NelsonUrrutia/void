@@ -42,3 +42,20 @@ class ActivityController:
     def suspend_activity(self, activity_id):
         with Activity() as ac:
             ac.suspend_activity(activity_id)
+
+    def get_suspended_activities(self) -> list[tuple]:
+        with Activity() as ac:
+            raw_activities = ac.get_suspended_activities()
+            activities = []
+            for item in raw_activities:
+                activities.append((item['id'], item['activity'], item['category']))
+            return activities
+
+    def restore_activity(self, activity_id) -> bool:
+        """Return False when an active activity already uses that name in its category."""
+        with Activity() as ac:
+            try:
+                ac.restore_activity(activity_id)
+            except sqlite3.IntegrityError:
+                return False
+        return True
