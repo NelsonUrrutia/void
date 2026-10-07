@@ -12,7 +12,7 @@
 # **V**ital **O**ffline **I**nformation **D**iary
 
 ---
-![VOID: wellcome screen, void activities, void collection, void day](https://github.com/NelsonUrrutia/void/blob/main/assets/void-banner.png)
+![VOID: welcome screen, void activities, void collection, void day](https://raw.githubusercontent.com/NelsonUrrutia/void/main/assets/void-banner.png)
 
 > **VOID** is an offline diary to be used in the terminal.
 
