@@ -66,3 +66,28 @@ class Activity:
                     WHERE id = ?
                 """
                 db.execute(sql, data)
+
+    def get_suspended_activities(self):
+        with Connection() as db:
+            sql = """
+                SELECT
+                    activities.id as "id",
+                    activities.name as "activity",
+                    categories.name as "category"
+                FROM activities
+                INNER JOIN
+                    categories on categories.id = activities.category_id
+                WHERE activities.is_active = 0
+                ORDER BY categories.name, activities.name"""
+            result = db.querying(sql)
+            return result
+
+    def restore_activity(self, activity_id):
+        with Connection() as db:
+            data = (activity_id,)
+            sql = """
+                UPDATE activities
+                SET is_active = 1
+                WHERE id = ?
+            """
+            db.execute(sql, data)

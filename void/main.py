@@ -8,6 +8,7 @@ from void.views.collection import CollectionView
 from void.views.day_note import DayNote
 from void.views.note import NoteView
 from void.views.note_form import NoteForm
+from void.views.suspended import SuspendedView
 from void.views.welcome import WelcomeScreen
 
 
@@ -159,6 +160,8 @@ class VoidApp(App):
             with TabPane("VOID ACTIVITIES", id="void_activities"):
                 yield ActivitiesView()
 
+            with TabPane("VOID SUSPENDED", id="void_suspended"):
+                yield SuspendedView()
 
         yield Footer()
 
@@ -171,6 +174,14 @@ class VoidApp(App):
     @on(ActivitiesView.Changed)
     async def on_activities_changed(self) -> None:
         await self.query_one(NoteView).recompose()
+        await self.query_one(DayNote).recompose()
+        self.query_one(SuspendedView).update_suspended()
+
+    @on(SuspendedView.Restored)
+    async def on_activity_restored(self) -> None:
+        await self.query_one(NoteView).recompose()
+        await self.query_one(DayNote).recompose()
+        self.query_one(ActivitiesView).update_activities()
 
     def on_mount(self) -> None:
         self.title = "VOID"
